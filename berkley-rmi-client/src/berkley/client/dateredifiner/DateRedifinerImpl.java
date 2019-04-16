@@ -2,10 +2,9 @@ package berkley.client.dateredifiner;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Date;
 
+import berkley.client.time.LocalTimeResolver;
 import berkley.server.rmi.DateRedifiner;
-import berkley.server.time.LocalTimeResolver;
 
 @SuppressWarnings("serial")
 public class DateRedifinerImpl extends UnicastRemoteObject implements DateRedifiner {
@@ -18,15 +17,13 @@ public class DateRedifinerImpl extends UnicastRemoteObject implements DateRedifi
 
 	@Override
 	public Long getCurrentLocaDateDifference(long millis) {
-		long instant = localTimeResolver.getCurrentLocalDateTime().getTime();
-		return instant - millis;
+		long currentTimeMills = localTimeResolver.getCurrentLocalDateTime().getTime();
+		return currentTimeMills - millis;
 	}
 
 	@Override
-	public void redefineLocalDate(long minutes) {
-		long currentTime = localTimeResolver.getCurrentLocalDateTime().getTime();
-		Date newDate = new Date(currentTime - minutes);
-		localTimeResolver.setCurrentLocalDateTime(newDate);
+	public void redefineLocalDate(long millsReceived) {
+		long currentTimeMills = localTimeResolver.getCurrentLocalDateTime().getTime();
+		localTimeResolver.setCurrentLocalDateTime(millsReceived + currentTimeMills);
 	}
-
 }
