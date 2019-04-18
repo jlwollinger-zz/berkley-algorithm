@@ -23,9 +23,8 @@ public class Client {
 	
 	private int port;
 
-	public Client(int port) throws RemoteException {
-		this.port = port;
-		registry = LocateRegistry.createRegistry(this.port);
+	public Client() throws RemoteException {
+		registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
 	}
 
 	public void start() throws RemoteException, UnknownHostException {
