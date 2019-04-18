@@ -1,11 +1,12 @@
 package berkley.server.time;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class LocalTimeResolver {
-	
+
 	private static LocalTimeResolver instance;
-	private Date date = new Date();
+	private long timeInMills;
 
 	private LocalTimeResolver() {
 	}
@@ -14,17 +15,25 @@ public class LocalTimeResolver {
 		if (instance == null) {
 			instance = new LocalTimeResolver();
 		}
+		instance.timeInMills = new Date().getTime();
 		return instance;
 	}
 
 	public Date getCurrentLocalDateTime() {
-		return date;
+		return new Date(timeInMills);
 	}
 
-	public void setCurrentLocalDateTime(Date newDate) {
-		this.date = newDate;
+	public void setCurrentLocalDateTime(long mills) {
+		this.timeInMills = mills;
 	}
 	
-	
+	public long getCurrentLocalDateTimeInMills() {
+		return timeInMills;
+	}
+
+	public long getCurrentLocalDateTimeInMillsAndIncOneSecond() {
+		return timeInMills += TimeUnit.SECONDS.toMillis(1);
+	}
+
 
 }

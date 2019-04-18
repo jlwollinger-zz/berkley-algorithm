@@ -4,14 +4,18 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import berkley.client.time.LocalTimeResolver;
-import berkley.server.rmi.DateRedifiner;
 
 @SuppressWarnings("serial")
 public class DateRedifinerImpl extends UnicastRemoteObject implements DateRedifiner {
 
 	private LocalTimeResolver localTimeResolver;
+	private String address;
+	private int port;
+	
 
-	public DateRedifinerImpl() throws RemoteException {
+	public DateRedifinerImpl(String address, int port) throws RemoteException {
+		this.address = address;
+		this.port = port;
 		localTimeResolver = LocalTimeResolver.getInstance();
 	}
 
@@ -25,5 +29,10 @@ public class DateRedifinerImpl extends UnicastRemoteObject implements DateRedifi
 	public void redefineLocalDate(long millsReceived) {
 		long currentTimeMills = localTimeResolver.getCurrentLocalDateTime().getTime();
 		localTimeResolver.setCurrentLocalDateTime(millsReceived + currentTimeMills);
+	}
+
+	@Override
+	public String getAddress() {
+		return address + ":" + port;
 	}
 }

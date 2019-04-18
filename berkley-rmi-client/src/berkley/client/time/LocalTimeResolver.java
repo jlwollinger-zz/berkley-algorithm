@@ -31,10 +31,10 @@ public class LocalTimeResolver {
 		Date newDate = new Date(newMillisDate);
 		
 		System.out.println(String.format("New date incoming: old date: %s, new date: %s", oldDate.toString(), newDate.toString()));
-		timeInMills = newDate.getTime();
+		timeInMills = newMillisDate;
 	}
 
-	public long getCurrentLocalDateTimeInMillsAndIncSecond() {
+	public long getCurrentLocalDateTimeInMillsAndIncOneSecond() {
 		return timeInMills += TimeUnit.SECONDS.toMillis(1);
 	}
 }

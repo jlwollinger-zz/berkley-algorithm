@@ -2,7 +2,7 @@ package berkley.server.dateredifiner;
 
 import java.util.Date;
 
-import berkley.server.rmi.DateRedifiner;
+import berkley.client.dateredifiner.DateRedifiner;
 import berkley.server.time.LocalTimeResolver;
 
 public class LocalDateRedifinerImpl implements DateRedifiner {
@@ -24,9 +24,14 @@ public class LocalDateRedifinerImpl implements DateRedifiner {
 	@Override
 	public void redefineLocalDate(long millis) {
 		Date oldDate = localTimeResolver.getCurrentLocalDateTime();
-		Date newDate = new Date(millis + millsSent);
-		LocalTimeResolver.getInstance().setCurrentLocalDateTime(newDate);
-		System.out.println(String.format("New date incoming: old date: %s, new date: %s", oldDate.toString(), newDate.toString()));
+		LocalTimeResolver.getInstance().setCurrentLocalDateTime(millis + millsSent);
+		System.out.println(String.format("New date incoming: old date: %s, new date: %s \n", oldDate.toString(), new Date(millis + millsSent).toString()));
+	}
+
+	@Override
+	public String getAddress() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
